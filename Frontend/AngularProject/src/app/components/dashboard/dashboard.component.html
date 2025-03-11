@@ -1,0 +1,41 @@
+<!-- src/app/components/dashboard/dashboard.component.html -->
+<div class="dashboard-container">
+    <div class="dashboard-header">
+      <h1>Dashboard</h1>
+      <button class="btn-logout" (click)="logout()">Logout</button>
+    </div>
+  
+    <div *ngIf="loading" class="loading">
+      Loading user data...
+    </div>
+  
+    <div *ngIf="!loading && currentUser" class="user-card">
+      <div class="user-header">
+        <div class="avatar">{{ currentUser.username.charAt(0).toUpperCase() }}</div>
+        <div class="user-role" [ngClass]="currentUser.role.toLowerCase()">
+          {{ currentUser.role }}
+        </div>
+      </div>
+      
+      <div class="user-details">
+        <div class="detail-item">
+          <div class="detail-label">Username</div>
+          <div class="detail-value">{{ currentUser.username }}</div>
+        </div>
+        
+        <div class="detail-item">
+          <div class="detail-label">Email</div>
+          <div class="detail-value">{{ currentUser.email }}</div>
+        </div>
+        
+        <div class="detail-item">
+          <div class="detail-label">Account Created</div>
+          <div class="detail-value">{{ currentUser.createdAt | date:'medium' }}</div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="!loading && !currentUser" class="error-message">
+      <p>Unable to load user data. Please try again later.</p>
+    </div>
+  </div>

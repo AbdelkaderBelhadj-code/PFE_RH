@@ -2,7 +2,38 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
+
 import authRoutes from './controllers/authController.js';
+import {
+  createEmploye,
+  updateEmploye,
+  deleteEmploye,
+  createRapport,
+  updateRapport,
+  deleteRapport,
+  addAbsence,
+  updateAbsence,
+  deleteAbsence,
+  getAllRapports,
+  getRapportsByEmploye,
+  getAllAbsences,
+  getAbsencesByEmploye,
+  getAllEmployes,
+  getAllDemandesAbsence,
+  traiterDemandeAbsence, 
+} from './controllers/rhAdminController.js';
+
+
+import {
+  createDemandeAbsence,
+  getMesDemandesAbsence,
+  getDemandeAbsenceById,
+  deleteDemandeAbsence
+} from './controllers/employeController.js';
+
+
+
+import { protect, authorize } from './middleware/auth.js';
 
 dotenv.config();
 
@@ -13,15 +44,45 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cors());
 
-// Routes
 app.use('/api/auth', authRoutes);
 
-// Basic route for testing
+app.post('/api/rh/employe', protect, authorize('Admin_RH'), createEmploye);
+app.put('/api/rh/employe/:id', protect, authorize('Admin_RH'), updateEmploye);
+app.delete('/api/rh/employe/:id', protect, authorize('Admin_RH'), deleteEmploye);
+
+app.post('/api/rh/rapport', protect, authorize('Admin_RH'), createRapport);
+app.put('/api/rh/rapport/:id', protect, authorize('Admin_RH'), updateRapport);
+app.delete('/api/rh/rapport/:id', protect, authorize('Admin_RH'), deleteRapport);
+
+app.post('/api/rh/absence', protect, authorize('Admin_RH'), addAbsence);
+app.put('/api/rh/absence/:id', protect, authorize('Admin_RH'), updateAbsence);
+app.delete('/api/rh/absence/:id', protect, authorize('Admin_RH'), deleteAbsence);
+
+app.get('/api/rh/rapports', protect, authorize('Admin_RH'), getAllRapports);
+app.get('/api/rh/rapports/:employeId', protect, authorize('Admin_RH'), getRapportsByEmploye);
+
+app.get('/api/rh/absences', protect, authorize('Admin_RH'), getAllAbsences);
+app.get('/api/rh/absences/:employeId', protect, authorize('Admin_RH'), getAbsencesByEmploye);
+
+app.get('/api/rh/employes', protect, authorize('Admin_RH'), getAllEmployes);
+
+app.get('/api/rh/demandes-absence', protect, authorize('Admin_RH', 'manager'), getAllDemandesAbsence);
+app.put('/api/rh/demande-absence/:id', protect, authorize('Admin_RH', 'manager'), traiterDemandeAbsence);
+
+
+
+app.post('/api/employe/demande-absence', protect, authorize('employé'), createDemandeAbsence);
+app.get('/api/employe/mes-demandes', protect, authorize('employé'), getMesDemandesAbsence);
+app.get('/api/employe/mes-demandes/:id', protect, authorize('employé'), getDemandeAbsenceById);
+app.delete('/api/employe/demande-absence/:id', protect, authorize('employé'), deleteDemandeAbsence);
+
+
+
+
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
@@ -31,8 +92,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
   .then(() => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

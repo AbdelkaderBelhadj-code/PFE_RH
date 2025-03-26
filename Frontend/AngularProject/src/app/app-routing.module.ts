@@ -5,6 +5,12 @@ import { SignupComponent } from './components/signup/signup.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth.guard';
+import { ManageEmployesComponent } from './components/admin/manage-employes/manage-employes.component';
+import { RoleGuard } from './guards/role.guard';
+import { ManageRapportsComponent } from './components/admin/manage-rapports/manage-rapports.component';
+import { ManageAbsencesComponent } from './components/admin/manage-absences/manage-absences.component';
+import { ManageMesDemandesComponent } from './components/manage-mes-demandes/manage-mes-demandes.component';
+import { ManageDemandesComponent } from './components/manage-demandes/manage-demandes.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/signin', pathMatch: 'full' },
@@ -14,6 +20,36 @@ const routes: Routes = [
     path: 'dashboard', 
     component: DashboardComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin/employes',
+    component: ManageEmployesComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['Admin_RH'] }
+  },
+  {
+    path: 'admin/rapports',
+    component: ManageRapportsComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['Admin_RH'] }
+  },
+  {
+    path: 'admin/absences',
+    component: ManageAbsencesComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['Admin_RH', 'manager'] }
+  },
+  {
+    path: 'admin/demandes',
+    component: ManageDemandesComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['Admin_RH', 'manager'] }
+  },
+  {
+    path: 'employe/mes-demandes',
+    component: ManageMesDemandesComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['employé'] }
   },
   // Wildcard route for 404
   { path: '**', redirectTo: '/signin' }

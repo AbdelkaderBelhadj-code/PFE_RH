@@ -9,13 +9,25 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ManageEmployesComponent } from './components/admin/manage-employes/manage-employes.component';
+import { ManageRapportsComponent } from './components/admin/manage-rapports/manage-rapports.component';
+import { ManageAbsencesComponent } from './components/admin/manage-absences/manage-absences.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ManageMesDemandesComponent } from './components/manage-mes-demandes/manage-mes-demandes.component';
+import { ManageDemandesComponent } from './components/manage-demandes/manage-demandes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
     SigninComponent,
-    DashboardComponent
+    DashboardComponent,
+    ManageEmployesComponent,
+    ManageRapportsComponent,
+    ManageAbsencesComponent,
+    NavbarComponent,
+    ManageMesDemandesComponent,
+    ManageDemandesComponent
   ],
   imports: [
     BrowserModule,

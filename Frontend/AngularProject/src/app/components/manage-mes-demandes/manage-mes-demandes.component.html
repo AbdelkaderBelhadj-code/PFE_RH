@@ -1,0 +1,41 @@
+<div class="container">
+    <h2 class="title">Demander une absence</h2>
+    <form [formGroup]="demandeForm" (ngSubmit)="onSubmit()" class="form">
+      <select formControlName="type">
+        <option value="" disabled selected>-- Type d'absence --</option>
+        <option value="congé">Congé</option>
+        <option value="maladie">Maladie</option>
+      </select>
+  
+      <input type="number" formControlName="jours" placeholder="Nombre de jours" min="1" />
+  
+      <div class="form-actions">
+        <button class="btn primary" type="submit" [disabled]="demandeForm.invalid">Soumettre</button>
+      </div>
+    </form>
+  
+    <h3 class="title">Mes demandes d'absence</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Jours</th>
+          <th>Statut</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of demandes">
+          <td>{{ d.type }}</td>
+          <td>{{ d.jours }}</td>
+          <td [ngClass]="d.statut">{{ d.statut }}</td>
+          <td>{{ d.createdAt | date: 'short' }}</td>
+          <td>
+            <button class="btn small delete" *ngIf="d.statut === 'en attente'" (click)="delete(d._id)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -11,6 +11,7 @@ import { ManageRapportsComponent } from './components/admin/manage-rapports/mana
 import { ManageAbsencesComponent } from './components/admin/manage-absences/manage-absences.component';
 import { ManageMesDemandesComponent } from './components/manage-mes-demandes/manage-mes-demandes.component';
 import { ManageDemandesComponent } from './components/manage-demandes/manage-demandes.component';
+import { EmployeRapportComponent } from './components/employe-rapport/employe-rapport.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/signin', pathMatch: 'full' },
@@ -31,7 +32,7 @@ const routes: Routes = [
     path: 'admin/rapports',
     component: ManageRapportsComponent,
     canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['Admin_RH'] }
+    data: { roles: ['Admin_RH', 'manager'] }
   },
   {
     path: 'admin/absences',
@@ -48,6 +49,12 @@ const routes: Routes = [
   {
     path: 'employe/mes-demandes',
     component: ManageMesDemandesComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['employé'] }
+  },
+  {
+    path: 'employe/mes-rapport',
+    component: EmployeRapportComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['employé'] }
   },

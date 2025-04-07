@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 const API_URL = 'http://localhost:5000/api/auth';
@@ -26,16 +26,18 @@ export class AuthService {
   signup(userData: any): Observable<any> {
     return this.http.post<any>(`${API_URL}/signup`, userData)
       .pipe(
-        tap(response => {
+        map(response => {
           if (response.success) {
-            this.setUserAndToken(response);
+            return { status: 200, message: 'Inscription réussie' }; // Return success status
           }
+          return response; // Handle other cases if needed
         }),
         catchError(error => {
           return throwError(() => error);
         })
       );
   }
+  
 
   signin(credentials: any): Observable<any> {
     return this.http.post<any>(`${API_URL}/signin`, credentials)

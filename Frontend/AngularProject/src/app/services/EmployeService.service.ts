@@ -23,4 +23,12 @@ export class EmployeService {
   deleteDemande(id: string): Observable<any> {
     return this.http.delete(`${API}/demande-absence/${id}`);
   }
+  getMesAbsences(): Observable<any> {
+    return this.http.get(`${API}/mes-absences`);
+  }
+
+  getMesRapports(): Observable<any> {
+    return this.http.get(`${API}/mes-rapports`);
+  }
+
 }

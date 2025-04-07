@@ -1,4 +1,6 @@
+import Absence from "../models/Absence.js";
 import DemandeAbsence from "../models/DemandeAbsence.js";
+import Rapport from "../models/Rapport.js";
 
 export const createDemandeAbsence = async (req, res) => {
     try {
@@ -67,6 +69,24 @@ export const createDemandeAbsence = async (req, res) => {
       }
   
       res.status(200).json({ success: true, demande });
+    } catch (err) {
+      res.status(500).json({ success: false, message: err.message });
+    }
+  };
+
+  export const getMesAbsences = async (req, res) => {
+    try {
+      const absences = await Absence.find({ employe: req.user.id }).sort({ createdAt: -1 });
+      res.status(200).json({ success: true, absences });
+    } catch (err) {
+      res.status(500).json({ success: false, message: err.message });
+    }
+  };
+  
+  export const getMesRapports = async (req, res) => {
+    try {
+      const rapports = await Rapport.find({ employe: req.user.id }).sort({ createdAt: -1 });
+      res.status(200).json({ success: true, rapports });
     } catch (err) {
       res.status(500).json({ success: false, message: err.message });
     }

@@ -1,22 +1,26 @@
 <nav class="navbar">
   <div class="navbar-left">
-    <span class="app-title">ATS RH</span>
+    <span class="app-title" routerLink="/dashboard">ATS RH</span>
 
     <!-- Admin RH uniquement -->
     <ng-container *ngIf="user?.role === 'Admin_RH'">
       <a routerLink="/admin/employes" routerLinkActive="active">Employés</a>
-      <a routerLink="/admin/rapports" routerLinkActive="active">Rapports</a>
+      <a routerLink="/admin/rapports" routerLinkActive="active">Rapports de Performance</a>
     </ng-container>
 
     <!-- Admin RH et Manager -->
     <ng-container *ngIf="user?.role === 'Admin_RH' || user?.role === 'manager'">
       <a routerLink="/admin/absences" routerLinkActive="active">Absences</a>
       <a routerLink="/admin/demandes" routerLinkActive="active">Demandes</a>
+      <a routerLink="/admin/rapports" routerLinkActive="active">Rapports de Performance</a>
+
     </ng-container>
 
     <!-- Employé uniquement -->
     <ng-container *ngIf="user?.role === 'employé'">
       <a routerLink="/employe/mes-demandes" routerLinkActive="active">Mes Absences</a>
+      <a routerLink="/employe/mes-rapport" routerLinkActive="active">Mes Performances</a>
+
     </ng-container>
   </div>
 

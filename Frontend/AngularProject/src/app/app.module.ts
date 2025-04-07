@@ -15,6 +15,7 @@ import { ManageAbsencesComponent } from './components/admin/manage-absences/mana
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ManageMesDemandesComponent } from './components/manage-mes-demandes/manage-mes-demandes.component';
 import { ManageDemandesComponent } from './components/manage-demandes/manage-demandes.component';
+import { EmployeRapportComponent } from './components/employe-rapport/employe-rapport.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ManageDemandesComponent } from './components/manage-demandes/manage-dem
     ManageAbsencesComponent,
     NavbarComponent,
     ManageMesDemandesComponent,
-    ManageDemandesComponent
+    ManageDemandesComponent,
+    EmployeRapportComponent
   ],
   imports: [
     BrowserModule,
